@@ -1,0 +1,16 @@
+/* DICHIARAZIONE VARIABILI */
+:root
+{
+    /* VARIABILI DIMENSIONALI */
+    --mode          : 0; 
+    --main_width    : 80vw;
+    --main_height   : 80vh;
+    /* VARIABILI CROMATICHE */
+}
+
+main
+{
+    width: var(--main_width);
+    height: var(--main_height);
+}
+
