@@ -24,8 +24,11 @@
         <h1 class="fixed-top text-center text-white">Vue Boolzapp <span class="fs-4 text-white-50">{{(check_if_large) ? ('(Large)') : ('(Small)')}}</span></h1>
         <!-- Ricordarsi di impostare il background a gradiente -->
         <div id="web_app" class="vh-100 container-fluid d-flex justify-content-center align-items-center bg-success">
-            <main class="row bg-info">
-
+            <main class="row p-0 m-0">
+                <!-- La prima sezione (lista dei contatti) verrà visualizzata se il dispositivo è large (a prescindere che sia attiva o meno la chat) oppure se, con dispositivo small, non è attiva la chat -->
+                <section v-if="((check_if_large) || (!chat_is_active))" id="friends_side" v-bind:class="(check_if_large) ? ('col-4') : ('col-12')"></section>
+                <!-- La seconda sezione (chat) verrà visualizzata se il dispositivo è large (a prescindere che sia attiva o meno la chat) oppure se, con dispositivo small, la chat risulti attiva -->
+                <section v-if="((check_if_large) || (chat_is_active))" id="chat_side" v-bind:class="(check_if_large) ? ('col-8') : ('col-12')"></section>
             </main>
         </div>
     </div>
