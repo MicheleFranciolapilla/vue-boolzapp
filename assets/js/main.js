@@ -262,11 +262,12 @@ createApp(
                     (this.check_last_sent(index)) ? (output_str = `Ultimo accesso: ${last_sent_data[0].substring(0,5)} alle ${last_sent_data[1].substring(0,5)}`) : (output_str = "Ultimo accesso: ---- ");
                     break;
                 case 1:
-                    (this.check_last_sent(index)) ? (output_str = `${last_sent_data[0].substring(0,5)} - ${last_sent_data[1].substring(0,5)}`) : (output_str = "----");
-                    break;
-                case 2:
                     (this.check_last_sent(index)) ? (output_str = `${last_sent_msg}`) : (output_str = "----");
                     break;
+                case 2:
+                    (this.check_last_sent(index)) ? (output_str = `${last_sent_data[0].substring(0,5)}`) : (output_str = "----");
+                    break;
+
             }
             return output_str;
         },
