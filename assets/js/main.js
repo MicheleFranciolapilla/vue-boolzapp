@@ -259,7 +259,7 @@ createApp(
                     (this.check_last_access(index)) ? (output_str = `Ultimo accesso: ${last_access_data[0].substring(0,5)} alle ${last_access_data[1].substring(0,5)}`) : (output_str = "Ultimo accesso: ---- ");
                     break;
                 case 1:
-                    (this.check_last_access(index)) ? (output_str = `${last_access_data[0].substring(0,5)} alle ${last_access_data[1].substring(0,5)}`) : (output_str = "----");
+                    (this.check_last_access(index)) ? (output_str = `${last_access_data[0].substring(0,5)} - ${last_access_data[1].substring(0,5)}`) : (output_str = "----");
                     break;
             }
             return output_str;

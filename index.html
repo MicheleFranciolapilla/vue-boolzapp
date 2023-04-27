@@ -54,12 +54,12 @@
                     <div id="search_area">
                         Area di ricerca da implementare
                     </div>
-                    <div #contact_list>
-                        <div v-for="(item, index) in contacts" :key="index" class="contact px-3" v-bind:class="(index==active_contact) ? ('active') : ('')">
+                    <div id="contact_list">
+                        <div v-for="(item, index) in contacts" :key="index" class="contact ps-3 pe-2" v-bind:class="(index==active_contact) ? ('active') : ('')">
                             <div class="person">
                                 <img v-bind:src="item.avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${index}`>
                                 <div class="person_details align-self-start">
-                                    <span>{{item.name}}</span>
+                                    <span style="font-size: xx-small;">{{item.name}}</span>
                                     <span style="font-size: xx-small;">Ultimo messaggio inviato</span>
                                 </div>
                             </div>
