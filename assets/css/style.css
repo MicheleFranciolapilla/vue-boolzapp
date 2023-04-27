@@ -40,7 +40,7 @@ main
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 10vh;
+    height: 8vh;
     width: 100%;
     background-color: lightgray;
 }
@@ -80,4 +80,66 @@ main
 {
     font-size: 1rem;
     cursor: pointer;
+}
+
+#notifications
+{
+    width: 100%;
+    height: 8vh;
+    background-color: lightskyblue;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;
+}
+
+#bell_circle
+{
+    height: 80%;
+    aspect-ratio: 1;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: lightskyblue;
+    cursor: pointer;
+}
+
+#notifications_text
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: x-small;
+}
+
+#search_area
+{
+    width: 100%;
+    height: 6vh;
+}
+
+#contat_list
+{
+    width: 100%;
+    height: 78vh;
+    /* list-style: none; */
+    overflow-y: auto;
+}
+
+.contact
+{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(243, 234, 234);
+    border: 1px solid gray;
+}
+
+.contact.active
+{
+    background-color: rgb(103, 103, 196);
 }

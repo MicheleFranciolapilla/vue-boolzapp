@@ -17,6 +17,7 @@ createApp(
                     chat_is_active      : false,
                     active_contact      : null, 
                     last_access_data    : null, 
+                    allow_notifications : false,
                     contacts            : [
                                             {
                                                 name        : 'Michele',
@@ -120,7 +121,7 @@ createApp(
                                             },
                                             {
                                                 name        : 'Claudia',
-                                                avatar      : './img/avatar_5.png',
+                                                avatar      : './img/avatar_6.png',
                                                 visible     : true,
                                                 messages    : [
                                                                 {
@@ -255,7 +256,10 @@ createApp(
             switch (value)
             {
                 case 0:
-                    (this.check_last_access(index)) ? (output_str = `Ultimo accesso: ${last_access_data[0].substring(0,5)} alle ${last_access_data[1].substring(0,5)}`) : (output_str = `Ultimo accesso: ${last_access_data[0]} ${last_access_data[1]}`);
+                    (this.check_last_access(index)) ? (output_str = `Ultimo accesso: ${last_access_data[0].substring(0,5)} alle ${last_access_data[1].substring(0,5)}`) : (output_str = "Ultimo accesso: ---- ");
+                    break;
+                case 1:
+                    (this.check_last_access(index)) ? (output_str = `${last_access_data[0].substring(0,5)} alle ${last_access_data[1].substring(0,5)}`) : (output_str = "----");
                     break;
             }
             return output_str;

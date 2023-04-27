@@ -51,6 +51,21 @@
                             <a href="#" v-on:click="allow_notifications = !allow_notifications">{{(allow_notifications) ? ("Disattiva notifiche desktop") : ("Attiva notifiche desktop")}}</a>
                         </div>
                     </div>
+                    <div id="search_area">
+                        Area di ricerca da implementare
+                    </div>
+                    <div #contact_list>
+                        <div v-for="(item, index) in contacts" :key="index" class="contact px-3" v-bind:class="(index==active_contact) ? ('active') : ('')">
+                            <div class="person">
+                                <img v-bind:src="item.avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${index}`>
+                                <div class="person_details align-self-start">
+                                    <span>{{item.name}}</span>
+                                    <span style="font-size: xx-small;">Ultimo messaggio inviato</span>
+                                </div>
+                            </div>
+                            <span style="font-size: xx-small;" class="align-self-start">{{check_last_access_plus_output(index,1)}}</span>
+                        </div>
+                    </div>
                 </section>
                 <!-- La seconda sezione (chat) verrà visualizzata se il dispositivo è large (a prescindere che sia attiva o meno la chat) oppure se, con dispositivo small, la chat risulti attiva -->
                 <section id="chat_side"
