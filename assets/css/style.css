@@ -3,7 +3,7 @@
 {
     /* VARIABILI DIMENSIONALI */
     --main_width            : 80vw;
-    --main_height           : 80vh;
+    --main_height           : 85vh;
     /* --width_friends_side    : 0;
     --width_chat_side       : 0; */
     /* VARIABILI CROMATICHE */
@@ -21,7 +21,6 @@ main
     display: flex;
     flex-direction: column;
     padding: 0;
-    border: 1px solid gray;
 }
 
 #friends_side
@@ -41,9 +40,32 @@ main
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-basis: 10%;
+    height: 8%;
     width: 100%;
     background-color: lightgray;
+}
+
+.person
+{
+    height: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.person img
+{
+    height: 100%;
+    object-fit: cover;
+}
+
+.person .person_details
+{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: start;
 }
 
 .icons_set
@@ -58,4 +80,5 @@ main
 .icons_set i
 {
     font-size: 1rem;
+    cursor: pointer;
 }

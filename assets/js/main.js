@@ -15,6 +15,7 @@ createApp(
                     check_if_large      : null,
                     device_threshold    : 576,
                     chat_is_active      : false,
+                    active_contact      : null, 
                     contacts            : [
                                             {
                                                 name        : 'Michele',
@@ -182,12 +183,14 @@ createApp(
     },
     created()
     {
+        this.fix_img_path();
         if (this.just_started)
         {
             this.just_started = false;
             this.check_device();
             // this.modify_css_root();
         }
+        this.initialize();
     },
     mounted()
     {
@@ -196,6 +199,46 @@ createApp(
     },
     methods: 
     {
+        fix_img_path()
+        {
+            this.contacts.forEach( item => 
+                {
+                    let {avatar} = item;
+                    avatar = avatar.replace(".png", ".jpg");
+                    avatar = avatar.replace("./", "./assets/");
+                    item.avatar = avatar;
+                });
+        },
+
+        // Inizializzazione ed individuazione del contatto attivo come primo contatto con chiave "visible = true"
+        initialize()
+        {
+            let found_visible = false;
+            let i = -1;
+            do
+            {
+                i++;
+                if (this.contacts[i].visible) found_visible = true;
+            } while(!found_visible && i < this.contacts.length - 1);
+            if (found_visible) this.active_contact = i;
+            else
+            {
+                // Stabilire cosa fare se nessuno dei contatti è visible
+            }
+        },
+
+        // Metodo che restituisce un oggetto in cui i valori delle chiavi "date" e "time" contengono le informazioni circa l'ultimo messaggio inviato (quindi ultimo accesso) relativamente al contatto indicizzato dal parametro
+        check_last_access(index)
+        {
+            let obj_to_return = {
+                                    flag    : false,
+                                    date    : "",
+                                    time    : "" 
+                                }
+            if (this.contacts[index].messages.length == 0) return obj_to_return;
+            else
+        },
+
         modify_css_root()
         {
             let css_root = document.querySelector(":root");

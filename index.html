@@ -26,10 +26,14 @@
         <div id="web_app" class="vh-100 container-fluid d-flex justify-content-center align-items-center bg-success">
             <main class="row p-0 m-0">
                 <!-- La prima sezione (lista dei contatti) verrà visualizzata se il dispositivo è large (a prescindere che sia attiva o meno la chat) oppure se, con dispositivo small, non è attiva la chat -->
-                <section v-if="((check_if_large) || (!chat_is_active))" id="friends_side" v-bind:class="(check_if_large) ? ('col-5') : ('col-12')">
+                <section id="friends_side"
+                        v-if="((check_if_large) || (!chat_is_active))"
+                        v-bind:class="(check_if_large) ? ('col-5') : ('col-12')" 
+                        v-bind:style="(chat_is_active) ? ('opacity: 0.7') : ('opacity: 1')">
                     <div class="section_header px-3">
                         <div class="person">
-
+                            <img src="./assets/img/avatar_io.jpg" class="rounded-circle" alt="avatar_personale">
+                            <span>Sofia</span>
                         </div>
                         <div class="icons_set">
                             <span><i class="fa-solid fa-circle-notch"></i></span>
@@ -39,10 +43,17 @@
                     </div>
                 </section>
                 <!-- La seconda sezione (chat) verrà visualizzata se il dispositivo è large (a prescindere che sia attiva o meno la chat) oppure se, con dispositivo small, la chat risulti attiva -->
-                <section v-if="((check_if_large) || (chat_is_active))" id="chat_side" v-bind:class="(check_if_large) ? ('col-7') : ('col-12')">
+                <section id="chat_side"
+                        v-if="((check_if_large) || (chat_is_active))" 
+                        v-bind:class="(check_if_large) ? ('col-7') : ('col-12')"
+                        v-bind:style="(chat_is_active) ? ('opacity: 1') : ('opacity: 0.7')">
                     <div class="section_header px-3">
                         <div class="person">
-
+                            <img v-bind:src="contacts[active_contact].avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${active_contact}`>
+                            <div class="person_details">
+                                <span>{{contacts[active_contact].name}}</span>
+                                <span></span>
+                            </div>
                         </div>
                         <div class="icons_set">
                             <span><i class="fa-solid fa-magnifying-glass"></i></span>
