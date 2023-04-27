@@ -52,7 +52,7 @@
                             <img v-bind:src="contacts[active_contact].avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${active_contact}`>
                             <div class="person_details">
                                 <span>{{contacts[active_contact].name}}</span>
-                                <span></span>
+                                <span style="font-size: xx-small;">{{check_last_access_plus_output(active_contact,0)}}</span>
                             </div>
                         </div>
                         <div class="icons_set">

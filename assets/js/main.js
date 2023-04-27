@@ -16,6 +16,7 @@ createApp(
                     device_threshold    : 576,
                     chat_is_active      : false,
                     active_contact      : null, 
+                    last_access_data    : null, 
                     contacts            : [
                                             {
                                                 name        : 'Michele',
@@ -227,16 +228,37 @@ createApp(
             }
         },
 
-        // Metodo che restituisce un oggetto in cui i valori delle chiavi "date" e "time" contengono le informazioni circa l'ultimo messaggio inviato (quindi ultimo accesso) relativamente al contatto indicizzato dal parametro
+        // Metodo che restituisce un valore booleano indicante la presenza o meno dei dati di ultimo accesso (ultimo messaggio inviato) relativamente al contatto indicizzato dal parametro. Il metodo salva gli eventuali dati (data / ora) aggiornando la variabile array "last_access_data"
         check_last_access(index)
         {
-            let obj_to_return = {
-                                    flag    : false,
-                                    date    : "",
-                                    time    : "" 
-                                }
-            if (this.contacts[index].messages.length == 0) return obj_to_return;
-            else
+            last_access_data = ["----","----"];
+            let flag = false;
+            if (this.contacts[index].messages.length != 0)
+            {
+                let i = this.contacts[index].messages.length;
+                do
+                {
+                    i--;
+                    if (this.contacts[index].messages[i].status == "sent")
+                    {
+                        flag = true;
+                        last_access_data = this.contacts[index].messages[i].date.split(" ");
+                    }
+                } while ((!flag) && (i > 0));
+            }
+            return flag;
+        },
+
+        check_last_access_plus_output(index, value)
+        {
+            let output_str = "";
+            switch (value)
+            {
+                case 0:
+                    (this.check_last_access(index)) ? (output_str = `Ultimo accesso: ${last_access_data[0].substring(0,5)} alle ${last_access_data[1].substring(0,5)}`) : (output_str = `Ultimo accesso: ${last_access_data[0]} ${last_access_data[1]}`);
+                    break;
+            }
+            return output_str;
         },
 
         modify_css_root()
