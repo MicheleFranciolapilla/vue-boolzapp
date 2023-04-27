@@ -19,6 +19,7 @@ createApp(
                     last_sent_data      : null, 
                     last_sent_msg       : null,
                     allow_notifications : false,
+                    search_data         : "",
                     contacts            : [
                                             {
                                                 name        : 'Michele',
@@ -228,6 +229,21 @@ createApp(
             {
                 // Stabilire cosa fare se nessuno dei contatti è visible
             }
+        },
+
+        searching()
+        {
+            this.contacts.forEach(item => 
+                {
+                    if (item.name.toUpperCase().includes(this.search_data.toUpperCase()) || (this.search_data == ""))
+                    {
+                        item.visible = true;
+                    }
+                    else
+                    {
+                        item.visible = false;
+                    }
+                });
         },
 
         // Metodo che restituisce un valore booleano indicante la presenza o meno dei dati di ultimo accesso (ultimo messaggio inviato) relativamente al contatto indicizzato dal parametro. Il metodo salva gli eventuali dati (data / ora) aggiornando la variabile array "last_sent_data"
