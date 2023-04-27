@@ -16,7 +16,8 @@ createApp(
                     device_threshold    : 576,
                     chat_is_active      : false,
                     active_contact      : null, 
-                    last_access_data    : null, 
+                    last_sent_data      : null, 
+                    last_sent_msg       : null,
                     allow_notifications : false,
                     contacts            : [
                                             {
@@ -229,10 +230,11 @@ createApp(
             }
         },
 
-        // Metodo che restituisce un valore booleano indicante la presenza o meno dei dati di ultimo accesso (ultimo messaggio inviato) relativamente al contatto indicizzato dal parametro. Il metodo salva gli eventuali dati (data / ora) aggiornando la variabile array "last_access_data"
-        check_last_access(index)
+        // Metodo che restituisce un valore booleano indicante la presenza o meno dei dati di ultimo accesso (ultimo messaggio inviato) relativamente al contatto indicizzato dal parametro. Il metodo salva gli eventuali dati (data / ora) aggiornando la variabile array "last_sent_data"
+        check_last_sent(index)
         {
-            last_access_data = ["----","----"];
+            last_sent_data = ["----","----"];
+            last_sent_msg = "----";
             let flag = false;
             if (this.contacts[index].messages.length != 0)
             {
@@ -243,23 +245,27 @@ createApp(
                     if (this.contacts[index].messages[i].status == "sent")
                     {
                         flag = true;
-                        last_access_data = this.contacts[index].messages[i].date.split(" ");
+                        last_sent_data = this.contacts[index].messages[i].date.split(" ");
+                        last_sent_msg = this.contacts[index].messages[i].message;
                     }
                 } while ((!flag) && (i > 0));
             }
             return flag;
         },
 
-        check_last_access_plus_output(index, value)
+        check_last_sent_plus_output(index, value)
         {
             let output_str = "";
             switch (value)
             {
                 case 0:
-                    (this.check_last_access(index)) ? (output_str = `Ultimo accesso: ${last_access_data[0].substring(0,5)} alle ${last_access_data[1].substring(0,5)}`) : (output_str = "Ultimo accesso: ---- ");
+                    (this.check_last_sent(index)) ? (output_str = `Ultimo accesso: ${last_sent_data[0].substring(0,5)} alle ${last_sent_data[1].substring(0,5)}`) : (output_str = "Ultimo accesso: ---- ");
                     break;
                 case 1:
-                    (this.check_last_access(index)) ? (output_str = `${last_access_data[0].substring(0,5)} - ${last_access_data[1].substring(0,5)}`) : (output_str = "----");
+                    (this.check_last_sent(index)) ? (output_str = `${last_sent_data[0].substring(0,5)} - ${last_sent_data[1].substring(0,5)}`) : (output_str = "----");
+                    break;
+                case 2:
+                    (this.check_last_sent(index)) ? (output_str = `${last_sent_msg}`) : (output_str = "----");
                     break;
             }
             return output_str;

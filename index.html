@@ -21,7 +21,7 @@
 
     <div id="vue_app">
         <!-- Titolo h1 in position fixed per non sottrarre spazio al contenitore web_app -->
-        <h1 class="fixed-top text-center text-white">Vue Boolzapp <span class="fs-4 text-white-50">{{(check_if_large) ? ('(Large)') : ('(Small)')}}</span></h1>
+        <h1 class="fixed-top text-center text-white fs-3">Vue Boolzapp <span class="fs-4 text-white-50">{{(check_if_large) ? ('(Large)') : ('(Small)')}}</span></h1>
         <!-- Ricordarsi di impostare il background a gradiente -->
         <div id="web_app" class="vh-100 container-fluid d-flex justify-content-center align-items-center bg-success">
             <main class="row p-0 m-0">
@@ -55,15 +55,17 @@
                         Area di ricerca da implementare
                     </div>
                     <div id="contact_list">
-                        <div v-for="(item, index) in contacts" :key="index" class="contact ps-3 pe-2" v-bind:class="(index==active_contact) ? ('active') : ('')">
+                        <div v-for="(item, index) in contacts" :key="index" class="contact ps-3 pe-2" 
+                        v-bind:class="(index==active_contact) ? ('active') : ('')"
+                        v-bind:style="(!item.visible) ? ('display: none;') : ('')">
                             <div class="person">
                                 <img v-bind:src="item.avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${index}`>
                                 <div class="person_details align-self-start">
                                     <span style="font-size: xx-small;">{{item.name}}</span>
-                                    <span style="font-size: xx-small;">Ultimo messaggio inviato</span>
+                                    <span class="show_last_msg" style="font-size: xx-small;">{{check_last_sent_plus_output(index,2)}}</span>
                                 </div>
                             </div>
-                            <span style="font-size: xx-small;" class="align-self-start">{{check_last_access_plus_output(index,1)}}</span>
+                            <span style="font-size: xx-small;" class="align-self-start">{{check_last_sent_plus_output(index,1)}}</span>
                         </div>
                     </div>
                 </section>
@@ -77,7 +79,7 @@
                             <img v-bind:src="contacts[active_contact].avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${active_contact}`>
                             <div class="person_details">
                                 <span>{{contacts[active_contact].name}}</span>
-                                <span style="font-size: xx-small;">{{check_last_access_plus_output(active_contact,0)}}</span>
+                                <span style="font-size: xx-small;">{{check_last_sent_plus_output(active_contact,0)}}</span>
                             </div>
                         </div>
                         <div class="icons_set">

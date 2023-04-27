@@ -136,9 +136,25 @@ main
     align-items: center;
     background-color: rgb(243, 234, 234);
     border: 1px solid gray;
+    cursor: pointer;
+}
+
+.contact:hover
+{
+    background-color: lightgray;
 }
 
 .contact.active
 {
     background-color: rgb(103, 103, 196);
+}
+
+.show_last_msg
+{
+    color: rgb(116, 159, 32);
+}
+
+.contact.active .show_last_msg
+{
+    color: white;
 }
