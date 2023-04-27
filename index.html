@@ -30,7 +30,7 @@
                         v-if="((check_if_large) || (!chat_is_active))"
                         v-bind:class="(check_if_large) ? ('col-5') : ('col-12')" 
                         v-bind:style="(chat_is_active) ? ('opacity: 0.7') : ('opacity: 1')">
-                    <div class="section_header px-3">
+                    <div class="section_header px-2">
                         <div class="person">
                             <img src="./assets/img/avatar_io.jpg" class="rounded-circle" alt="avatar_personale">
                             <span>Sofia</span>
@@ -41,13 +41,23 @@
                             <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
                         </div>
                     </div>
+                    <div id="notifications" class="px-3">
+                        <div id="bell_circle" v-on:click="allow_notifications = !allow_notifications">
+                            <i v-if="allow_notifications" class="fa-solid fa-bell"></i>
+                            <i v-else class="fa-solid fa-bell-slash"></i>
+                        </div>
+                        <div id="notifications_text">
+                            <span class="text-black-50">Ricevi notifiche messaggi</span>
+                            <a href="#" v-on:click="allow_notifications = !allow_notifications">{{(allow_notifications) ? ("Disattiva notifiche desktop") : ("Attiva notifiche desktop")}}</a>
+                        </div>
+                    </div>
                 </section>
                 <!-- La seconda sezione (chat) verrà visualizzata se il dispositivo è large (a prescindere che sia attiva o meno la chat) oppure se, con dispositivo small, la chat risulti attiva -->
                 <section id="chat_side"
                         v-if="((check_if_large) || (chat_is_active))" 
                         v-bind:class="(check_if_large) ? ('col-7') : ('col-12')"
                         v-bind:style="(chat_is_active) ? ('opacity: 1') : ('opacity: 0.7')">
-                    <div class="section_header px-3">
+                    <div class="section_header px-2">
                         <div class="person">
                             <img v-bind:src="contacts[active_contact].avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${active_contact}`>
                             <div class="person_details">
