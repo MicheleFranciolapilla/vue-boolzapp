@@ -200,6 +200,12 @@ createApp(
     {
         // Funzionamento ok in inspector, non ok in window resize
         window.addEventListener("resize", () => {this.check_device_change()});
+
+        search_form.addEventListener("submit", (key_event) => 
+        {
+            key_event.preventDefault();
+            this.selection_by_search_bar();
+        });
     },
     methods: 
     {
@@ -231,19 +237,41 @@ createApp(
             }
         },
 
+        contact_found()
+        {
+            let position = -1;
+            this.contacts.forEach((item, index) =>
+            {
+                if (item.name.toUpperCase() == this.search_data.toUpperCase()) position = index;
+            });
+            return position;
+        },
+
+        error(what)
+        {
+            this.search_data = "";
+            this.searching();
+        },
+
+        new_active(index)
+        {
+            this.search_data = "";
+            this.searching();
+            this.active_contact = index;
+        },
+
+        selection_by_search_bar()
+        {
+            const item = this.contact_found();
+            (item != -1) ? (this.new_active(item)) : (this.error(1));
+        },
+
         searching()
         {
             this.contacts.forEach(item => 
-                {
-                    if (item.name.toUpperCase().includes(this.search_data.toUpperCase()) || (this.search_data == ""))
-                    {
-                        item.visible = true;
-                    }
-                    else
-                    {
-                        item.visible = false;
-                    }
-                });
+            {
+                (item.name.toUpperCase().includes(this.search_data.toUpperCase()) || (this.search_data == "")) ? (item.visible = true) : (item.visible = false)
+            });
         },
 
         // Metodo che restituisce un valore booleano indicante la presenza o meno dei dati di ultimo accesso (ultimo messaggio inviato) relativamente al contatto indicizzato dal parametro. Il metodo salva gli eventuali dati (data / ora) aggiornando la variabile array "last_sent_data"

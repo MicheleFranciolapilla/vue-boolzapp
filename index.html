@@ -52,15 +52,15 @@
                         </div>
                     </div>
                     <div id="search_area" class="px-3 py-1">
-                        <form class="w-100 border border-3 rounded-1 d-flex">
+                        <form id="search_form" class="w-100 border border-3 rounded-1 d-flex">
                             <button class="btn btn-outline-success" type="submit"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
-                            <input class="form-control" type="text" v-model="search_data" placeholder="Cerca o inizia una nuova chat" aria-label="Search" v-on:keyup="searching()">
+                            <input id="data_input" class="form-control" type="text" v-model="search_data" placeholder="Cerca o inizia una nuova chat" aria-label="Search" v-on:keyup="searching()">
                         </form>
                     </div>
                     <div id="contact_list">
                         <div v-for="(item, index) in contacts" :key="index" class="contact ps-3 pe-2" 
                         v-bind:class="(index==active_contact) ? ('active') : ('')"
-                        v-bind:style="(!item.visible) ? ('display: none;') : ('')">
+                        v-bind:style="(!item.visible) ? ('display: none;') : ('')" v-on:click="new_active(index)">
                             <div class="person">
                                 <img v-bind:src="item.avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${index}`>
                                 <div class="person_details align-self-start">
