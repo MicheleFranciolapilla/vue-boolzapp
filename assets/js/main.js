@@ -16,7 +16,14 @@ createApp(
                     error_array         : [
                                             "",
                                             "Errore nel tentativo di ricerca diretta del contatto. Si prega di digitare il nome del contatto per intero. N.B. La ricerca non è case-sensitive."
-                    ], 
+                                          ], 
+                    random_replies      : [
+                                            "Ciao",
+                                            "Ok",
+                                            "Non capisco cosa vuoi dire!",
+                                            "Rispondo a casaccio",
+                                            "Ci vediamo stasera?"
+                                          ], 
                     new_message         : "", 
                     new_message_delay   : 1500, 
                     check_if_large      : null,
@@ -242,9 +249,17 @@ createApp(
     methods: 
     {
 
+        int_random(max) {return Math.floor(Math.random() * max)},
+
         is_odd(number) {return ((number % 2) != 0)},
 
-        add_new_message()
+        random_reply()
+        {
+            let d_t_str = this.date_time_str();
+            this.contacts[this.active_contact].messages.push({'date':d_t_str, 'message':this.random_replies[this.int_random(this.random_replies.length)], 'status': "sent"});
+        },
+
+        date_time_str()
         {
             const date_time = new Date();
             
@@ -256,14 +271,20 @@ createApp(
             let seconds = date_time.getSeconds();
 
             let date_time_array = [day.toString(),"/",month.toString(),"/",year.toString()," ",hours.toString(),":",minutes.toString(),":",seconds.toString()];
-            let date_time_str = "";
+            let d_t_str = "";
 
-            date_time_array.forEach((item, index) => { ((!this.is_odd(index)) && (item.length == 1)) ? (date_time_str += "0"+item) : (date_time_str += item)});
-            console.log(date_time_array);
-            console.log(date_time_str);
+            date_time_array.forEach((item, index) => { ((!this.is_odd(index)) && (item.length == 1)) ? (d_t_str += "0"+item) : (d_t_str += item)});
+            return d_t_str;
+        },
 
-            this.contacts[this.active_contact].messages.push({'date':date_time_str, 'message':this.new_message, 'status': "sent"});
+        add_new_message()
+        {
+            let d_t_str = this.date_time_str();
+
+            this.contacts[this.active_contact].messages.push({'date':d_t_str, 'message':this.new_message, 'status': "received"});
             this.new_message = "";
+
+            setTimeout(this.random_reply, this.new_message_delay);
         },
 
         fix_img_path()

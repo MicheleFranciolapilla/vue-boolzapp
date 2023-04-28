@@ -206,13 +206,13 @@ main
 
 .sent
 {
-    align-self: flex-start;
+    align-self: flex-end;
     background-color: white;
 } 
 
 .received
 {
-    align-self: flex-end;
+    align-self: flex-start;
     background-color: lightgreen;
 }
 
