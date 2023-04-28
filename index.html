@@ -98,13 +98,14 @@
                         </div>
                     </div>
                     <div id="chat_messages_area" class="p-3">
-                        <div v-for="(item, index) in contacts[active_contact].messages"
+                        <div v-if="contacts[active_contact].messages.length != 0" v-for="(item, index) in contacts[active_contact].messages"
                             :key="index"
                             class="message"
                             v-bind:class="(item.status == 'sent') ? ('sent') : ('received')">
                             <p>{{item.message}}</p>
                             <span>{{item.date}}</span>
                         </div>
+                        <p v-else class="p-2 border border-3 border-warning rounded-3 text-black-50 bg-info">Non ci sono messaggi da visualizzare. La tua chat con {{contacts[active_contact].name}} è vuota</p>
                     </div>
                     <div id="new_message_area" class="px-2 px-lg-4">
                         <span><i class="fa-regular fa-face-smile-beam fs-4"></i></span>
