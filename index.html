@@ -97,15 +97,31 @@
                             <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
                         </div>
                     </div>
-                    <div id="chat_messages_area" class="p-3">
-                        <div v-if="contacts[active_contact].messages.length != 0" v-for="(item, index) in contacts[active_contact].messages"
-                            :key="index"
-                            class="message"
-                            v-bind:class="(item.status == 'sent') ? ('sent') : ('received')">
-                            <p>{{item.message}}</p>
-                            <span>{{item.date}}</span>
+                    <div id="chat_messages_area" class="position-relative p-3">
+                        <div v-if="contacts[active_contact].messages.length != 0" id="chat_head_text" class="sticky-top w-100">
+                            <div id="sent_by_me">
+                                <span>Messaggi inviati da me</span>
+                            </div>
+                            <div id="sent_by_active">
+                                <span>Messaggi inviati da {{contacts[active_contact].name}}</span>
+                            </div>
                         </div>
                         <p v-else class="p-2 border border-3 border-warning rounded-3 text-black-50 bg-info">Non ci sono messaggi da visualizzare. La tua chat con {{contacts[active_contact].name}} è vuota</p>
+                        <div v-for="(item, index) in contacts[active_contact].messages"
+                            :key="index"
+                            class="message position-relative"
+                            v-bind:class="(chat_is_active) ? ('hoverable') : ('')"
+                            v-bind:style="(item.status == 'sent') ? ('align-self:flex-end; background-color:lightgreen;') : ('align-self:flex-start; background-color:white;')">
+                            <div class="trash" v-on:click="open_dropdown(index)">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <div class="dropdown d-none">
+                                    <span>Cancella messaggio</span>
+                                    <span>Non cancellare</span>
+                                </div>
+                            </div>
+                            <p class="message_p">{{item.message}}</p>
+                            <span>{{item.date}}</span>
+                        </div>
                     </div>
                     <div id="new_message_area" class="px-2 px-lg-4">
                         <span v-if="chat_is_active"><i id="back" class="fa-solid fa-hand-point-left fa-beat-fade fs-4 text-primary" v-on:click.stop="chat_is_active = false"></i></span>

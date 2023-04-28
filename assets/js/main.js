@@ -34,6 +34,7 @@ createApp(
                     last_sent_msg       : null,
                     allow_notifications : false,
                     search_data         : "",
+                    // Assumiamo la condizione secondo cui, per ogni contatto, il messaggio "sent" si intende come inviato dal contatto a me e il contrario per "received"
                     contacts            : [
                                             {
                                                 name        : 'Michele',
@@ -313,6 +314,13 @@ createApp(
             {
                 // Stabilire cosa fare se nessuno dei contatti è visible
             }
+        },
+
+        open_dropdown(index)
+        {
+            let all_dropdown = document.querySelectorAll(".dropdown");
+            all_dropdown[index].classList.remove("d-none");
+            console.log(all_dropdown)
         },
 
         contact_found()

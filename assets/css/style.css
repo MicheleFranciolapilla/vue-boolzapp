@@ -187,6 +187,24 @@ main
     gap: 1rem;
 }
 
+#chat_head_text
+{
+    display: flex;
+    justify-content: space-between;
+    z-index: 998;
+}
+
+#chat_head_text > div
+{
+    max-width: 40%;
+    margin: 0 10px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+}
+
 .message
 {
     max-width: 75%;
@@ -198,6 +216,18 @@ main
     padding: 10px;
 }
 
+.hoverable:hover
+{
+    cursor: pointer;
+    border-color: blue;
+    color: blue;
+}
+
+.hoverable:hover .trash
+{
+    display: flex;
+}
+
 .message span
 {
     align-self: flex-end;
@@ -207,13 +237,53 @@ main
 .sent
 {
     align-self: flex-end;
-    background-color: white;
+    background-color: lightgreen;
 } 
 
 .received
 {
     align-self: flex-start;
-    background-color: lightgreen;
+    background-color: white;
+}
+
+.trash
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1rem;
+    height: 1rem;
+    margin: 0.3rem;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3rem;
+    border: 1px solid blue;
+    border-radius: 10%;
+    font-size: small;
+    color: blue;
+}
+
+.dropdown
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 997;
+    transform: translate(-60%, 110%);
+    padding: 0.6rem;
+    border: 1px solid black;
+    border-radius: 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: aqua;
+}
+
+.message_p
+{
+    margin-top: 1rem;
 }
 
 #new_message_area
