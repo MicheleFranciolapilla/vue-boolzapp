@@ -24,6 +24,12 @@
         <h1 class="fixed-top text-center text-white fs-3">Vue Boolzapp <span class="fs-4 text-white-50">{{(check_if_large) ? ('(Large)') : ('(Small)')}}</span></h1>
         <!-- Ricordarsi di impostare il background a gradiente -->
         <div id="web_app" class="vh-100 container-fluid d-flex justify-content-center align-items-center bg-success">
+            <div v-if="some_error" id="error_manager">
+                <div id="error_message" class="row py-3 px-2 px-lg-5 border border-5 border-danger rounded-3 text-danger bg-warning">
+                    <p>{{error_array[some_error]}}</p>
+                    <button class="col-2 offset-5 btn btn-info btn-outline-primary" v-on:click="reset_error()">OK</button>
+                </div>
+            </div>
             <main class="row p-0 m-0">
                 <!-- La prima sezione (lista dei contatti) verrà visualizzata se il dispositivo è large (a prescindere che sia attiva o meno la chat) oppure se, con dispositivo small, non è attiva la chat -->
                 <section id="friends_side"

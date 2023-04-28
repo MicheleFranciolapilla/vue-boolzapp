@@ -12,6 +12,11 @@ createApp(
     {
         return  {
                     just_started        : true,
+                    some_error          : 0, 
+                    error_array         : [
+                                            "",
+                                            "Errore nel tentativo di ricerca diretta del contatto. Si prega di digitare il nome del contatto per intero. N.B. La ricerca non è case-sensitive."
+                    ], 
                     check_if_large      : null,
                     device_threshold    : 576,
                     chat_is_active      : false,
@@ -247,10 +252,16 @@ createApp(
             return position;
         },
 
+        reset_error()
+        {
+            this.some_error = 0;
+        },
+
         error(what)
         {
             this.search_data = "";
             this.searching();
+            this.some_error = what; 
         },
 
         new_active(index)
