@@ -18,6 +18,7 @@ createApp(
                                             "Errore nel tentativo di ricerca diretta del contatto. Si prega di digitare il nome del contatto per intero. N.B. La ricerca non è case-sensitive."
                     ], 
                     new_message         : "", 
+                    new_message_delay   : 1500, 
                     check_if_large      : null,
                     device_threshold    : 576,
                     chat_is_active      : false,
@@ -32,21 +33,21 @@ createApp(
                                                 avatar      : './img/avatar_1.png',
                                                 visible     : true,
                                                 messages    : [
-                                                                // {
-                                                                //     date    : '10/01/2020 15:30:55',
-                                                                //     message : 'Hai portato a spasso il cane?',
-                                                                //     status  : 'sent'
-                                                                // },
-                                                                // {
-                                                                //     date    : '10/01/2020 15:50:00',
-                                                                //     message : 'Ricordati di stendere i panni',
-                                                                //     status  : 'sent'
-                                                                // },
-                                                                // {
-                                                                //     date    : '10/01/2020 16:15:22',
-                                                                //     message : 'Tutto fatto!',
-                                                                //     status  : 'received'
-                                                                // }
+                                                                {
+                                                                    date    : '10/01/2020 15:30:55',
+                                                                    message : 'Hai portato a spasso il cane?',
+                                                                    status  : 'sent'
+                                                                },
+                                                                {
+                                                                    date    : '10/01/2020 15:50:00',
+                                                                    message : 'Ricordati di stendere i panni',
+                                                                    status  : 'sent'
+                                                                },
+                                                                {
+                                                                    date    : '10/01/2020 16:15:22',
+                                                                    message : 'Tutto fatto!',
+                                                                    status  : 'received'
+                                                                }
                                                               ],
                                             },
                                             {
@@ -207,14 +208,64 @@ createApp(
         // Funzionamento ok in inspector, non ok in window resize
         window.addEventListener("resize", () => {this.check_device_change()});
 
+        // let DOM_contacts = document.querySelectorAll(".contact");
+        // DOM_contacts.addEventListener("keydown", (key_event) =>
+        // {
+            // key_event.preventDefault();
+            // switch (key_event.key)
+            // {
+            //     case "ArrowUp":
+            //         (this.active_contact==0) ? (this.active_contact=this.contacts.length-1) : (this.active_contact--);
+            //         break;
+            //     case "ArrowDown":
+            //         (this.active_contact==this.contacts.length-1) ? (this.active_contact=0) : (this.active_contact++);
+            //         break;
+            // }
+        // });
+
         search_form.addEventListener("submit", (key_event) => 
         {
             key_event.preventDefault();
             this.selection_by_search_bar();
         });
+
+        new_message_form.addEventListener("submit", (key_event) =>
+        {
+            key_event.preventDefault();
+            if (this.new_message != "") 
+            {
+                setTimeout(this.add_new_message, this.new_message_delay);
+            }
+        });
+
     },
     methods: 
     {
+
+        is_odd(number) {return ((number % 2) != 0)},
+
+        add_new_message()
+        {
+            const date_time = new Date();
+            
+            let day = date_time.getDate();
+            let month = date_time.getMonth() + 1;
+            let year = date_time.getFullYear();
+            let hours = date_time.getHours();
+            let minutes = date_time.getMinutes();
+            let seconds = date_time.getSeconds();
+
+            let date_time_array = [day.toString(),"/",month.toString(),"/",year.toString()," ",hours.toString(),":",minutes.toString(),":",seconds.toString()];
+            let date_time_str = "";
+
+            date_time_array.forEach((item, index) => { ((!this.is_odd(index)) && (item.length == 1)) ? (date_time_str += "0"+item) : (date_time_str += item)});
+            console.log(date_time_array);
+            console.log(date_time_str);
+
+            this.contacts[this.active_contact].messages.push({'date':date_time_str, 'message':this.new_message, 'status': "sent"});
+            this.new_message = "";
+        },
+
         fix_img_path()
         {
             this.contacts.forEach( item => 
