@@ -320,7 +320,18 @@ createApp(
         {
             let all_dropdown = document.querySelectorAll(".dropdown");
             all_dropdown[index].classList.remove("d-none");
-            console.log(all_dropdown)
+        },
+
+        close_dropdown(index)
+        {
+            let all_dropdown = document.querySelectorAll(".dropdown");
+            all_dropdown[index].classList.add("d-none");
+        },
+
+        delete_message(index)
+        {
+            this.close_dropdown(index);
+            this.contacts[this.active_contact].messages.splice(index,1);
         },
 
         contact_found()

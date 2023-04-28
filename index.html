@@ -115,8 +115,8 @@
                             <div class="trash" v-on:click="open_dropdown(index)">
                                 <i class="fa-solid fa-trash-can"></i>
                                 <div class="dropdown d-none">
-                                    <span>Cancella messaggio</span>
-                                    <span>Non cancellare</span>
+                                    <span v-on:click.stop="delete_message(index)">Cancella messaggio</span>
+                                    <span v-on:click.stop="close_dropdown(index)">Non cancellare</span>
                                 </div>
                             </div>
                             <p class="message_p">{{item.message}}</p>

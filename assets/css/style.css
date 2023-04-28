@@ -281,6 +281,17 @@ main
     background-color: aqua;
 }
 
+.dropdown > span
+{
+    color: black;
+}
+
+.dropdown > span:hover
+{
+    cursor: pointer;
+    color: blue;
+}
+
 .message_p
 {
     margin-top: 1rem;
