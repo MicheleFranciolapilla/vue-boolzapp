@@ -97,6 +97,22 @@
                             <span><i class="fa-solid fa-ellipsis-vertical"></i></span>
                         </div>
                     </div>
+                    <div id="chat_messages_area" class="p-3">
+                        <div v-for="(item, index) in contacts[active_contact].messages"
+                            :key="index"
+                            class="message"
+                            v-bind:class="(item.status == 'sent') ? ('sent') : ('received')">
+                            <p>{{item.message}}</p>
+                            <span>{{item.date}}</span>
+                        </div>
+                    </div>
+                    <div id="new_message_area" class="px-2 px-lg-4">
+                        <span><i class="fa-regular fa-face-smile-beam fs-4"></i></span>
+                        <form id="new_message_form">
+                            <input class="form-control" type="text" v-model="new_message" placeholder="Scrivi quì un messaggio">
+                        </form>
+                        <span><i class="fa-solid fa-microphone fs-4"></i></span>
+                    </div>
                 </section>
             </main>
         </div>

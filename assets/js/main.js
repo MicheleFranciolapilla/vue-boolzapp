@@ -17,6 +17,7 @@ createApp(
                                             "",
                                             "Errore nel tentativo di ricerca diretta del contatto. Si prega di digitare il nome del contatto per intero. N.B. La ricerca non è case-sensitive."
                     ], 
+                    new_message         : "", 
                     check_if_large      : null,
                     device_threshold    : 576,
                     chat_is_active      : false,
@@ -264,11 +265,18 @@ createApp(
             this.some_error = what; 
         },
 
+        focus_on_active()
+        {
+            let DOM_array = document.querySelectorAll(".contact");
+            DOM_array[this.active_contact].focus();
+        },
+
         new_active(index)
         {
             this.search_data = "";
             this.searching();
             this.active_contact = index;
+            this.focus_on_active();
         },
 
         selection_by_search_bar()
