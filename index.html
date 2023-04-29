@@ -65,6 +65,7 @@
                     </div>
                     <div id="contact_list">
                         <div v-for="(item, index) in contacts" :key="index" class="contact ps-3 pe-2" 
+                        v-bind:id=`contact_${index}`
                         v-bind:class="(index==active_contact) ? ('active') : ('')"
                         v-bind:style="(!item.visible) ? ('display: none;') : ('')" v-on:click="new_active(index)" @dblclick="chat_is_active = true">
                             <div class="person">

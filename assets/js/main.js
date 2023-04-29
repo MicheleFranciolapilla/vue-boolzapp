@@ -361,10 +361,12 @@ createApp(
             this.some_error = what; 
         },
 
-        focus_on_active()
+        focus_on_active(index)
         {
-            let DOM_array = document.querySelectorAll(".contact");
-            DOM_array[this.active_contact].focus();
+            let fake_anchor = document.createElement("a");
+            fake_anchor.setAttribute("href",`#contact_${index}`);
+            fake_anchor.click();
+            fake_anchor.remove();
         },
 
         new_active(index)
@@ -372,7 +374,7 @@ createApp(
             this.search_data = "";
             this.searching();
             this.active_contact = index;
-            this.focus_on_active();
+            this.focus_on_active(index);
         },
 
         selection_by_search_bar()
