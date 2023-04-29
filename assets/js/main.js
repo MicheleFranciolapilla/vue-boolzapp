@@ -203,13 +203,13 @@ createApp(
     created()
     {
         this.fix_img_path();
+        this.active_contact = 0;
         if (this.just_started)
         {
             this.just_started = false;
             this.check_device();
             // this.modify_css_root();
         }
-        this.initialize();
     },
     mounted()
     {
@@ -242,13 +242,23 @@ createApp(
             key_event.preventDefault();
             if (this.new_message != "") 
             {
-                setTimeout(this.add_new_message, this.new_message_delay);
+                // setTimeout(this.add_new_message, this.new_message_delay);
+                this.add_new_message();
             }
         });
 
     },
     methods: 
     {
+
+        check_msg_amount(what)
+        {
+            let nr = 0;
+            for (let i = 0; i < this.contacts[this.active_contact].messages.length; i++)
+                if (this.contacts[this.active_contact].messages[i].status == what)
+                    nr++;
+            return nr;
+        },
 
         int_random(max) {return Math.floor(Math.random() * max)},
 
@@ -299,21 +309,10 @@ createApp(
                 });
         },
 
-        // Inizializzazione ed individuazione del contatto attivo come primo contatto con chiave "visible = true"
-        initialize()
+        leave_chat_area()
         {
-            let found_visible = false;
-            let i = -1;
-            do
-            {
-                i++;
-                if (this.contacts[i].visible) found_visible = true;
-            } while(!found_visible && i < this.contacts.length - 1);
-            if (found_visible) this.active_contact = i;
-            else
-            {
-                // Stabilire cosa fare se nessuno dei contatti è visible
-            }
+            this.close_dropdown(-1);
+            this.chat_is_active = false;
         },
 
         open_dropdown(index)
@@ -325,7 +324,13 @@ createApp(
         close_dropdown(index)
         {
             let all_dropdown = document.querySelectorAll(".dropdown");
-            all_dropdown[index].classList.add("d-none");
+            if (index < 0)
+            {
+                for (let i = 0; i < all_dropdown.length; i++)
+                    all_dropdown[i].classList.add("d-none");
+            }
+            else
+                all_dropdown[index].classList.add("d-none");
         },
 
         delete_message(index)

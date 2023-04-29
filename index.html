@@ -20,7 +20,7 @@
 <body>
 
     <div id="vue_app">
-        <!-- Titolo h1 in position fixed per non sottrarre spazio al contenitore web_app -->
+        <!-- Titolo h1 (dinamico) in position fixed per non sottrarre spazio al contenitore web_app -->
         <h1 class="fixed-top text-center text-white fs-3">Vue Boolzapp <span class="fs-4 text-white-50">{{(check_if_large) ? ('(Large)') : ('(Small)')}}</span></h1>
         <!-- Ricordarsi di impostare il background a gradiente -->
         <div id="web_app" class="vh-100 container-fluid d-flex justify-content-center align-items-center bg-success">
@@ -35,7 +35,7 @@
                 <section id="friends_side"
                         v-if="((check_if_large) || (!chat_is_active))"
                         v-bind:class="(check_if_large) ? ('col-5') : ('col-12')" 
-                        v-bind:style="(chat_is_active) ? ('opacity: 0.7') : ('opacity: 1')" @click="chat_is_active = false">
+                        v-bind:style="(chat_is_active) ? ('opacity: 0.7') : ('opacity: 1')" @click="leave_chat_area()">
                     <div class="section_header px-2">
                         <div class="person">
                             <img src="./assets/img/avatar_io.jpg" class="rounded-circle" alt="avatar_personale">
@@ -100,10 +100,10 @@
                     <div id="chat_messages_area" class="position-relative p-3">
                         <div v-if="contacts[active_contact].messages.length != 0" id="chat_head_text" class="sticky-top w-100">
                             <div id="sent_by_me">
-                                <span>Messaggi inviati da me</span>
+                                <span>Messaggi inviati da me... ({{check_msg_amount('received')}})</span>
                             </div>
                             <div id="sent_by_active">
-                                <span>Messaggi inviati da {{contacts[active_contact].name}}</span>
+                                <span>Messaggi inviati da {{contacts[active_contact].name}}... ({{check_msg_amount('sent')}})</span>
                             </div>
                         </div>
                         <p v-else class="p-2 border border-3 border-warning rounded-3 text-black-50 bg-info">Non ci sono messaggi da visualizzare. La tua chat con {{contacts[active_contact].name}} è vuota</p>
@@ -124,7 +124,7 @@
                         </div>
                     </div>
                     <div id="new_message_area" class="px-2 px-lg-4">
-                        <span v-if="chat_is_active"><i id="back" class="fa-solid fa-hand-point-left fa-beat-fade fs-4 text-primary" v-on:click.stop="chat_is_active = false"></i></span>
+                        <span v-if="chat_is_active"><i id="back" class="fa-solid fa-hand-point-left fa-beat-fade fs-4 text-primary" v-on:click.stop="leave_chat_area()"></i></span>
                         <span><i class="fa-regular fa-face-smile-beam fs-4"></i></span>
                         <form id="new_message_form">
                             <input class="form-control" type="text" v-model="new_message" placeholder="Scrivi quì un messaggio">
