@@ -30,8 +30,8 @@ createApp(
                     device_threshold    : 576,
                     chat_is_active      : false,
                     active_contact      : null, 
-                    last_sent_data      : null, 
-                    last_sent_msg       : null,
+                    last_received_data      : null, 
+                    last_received_msg       : null,
                     allow_notifications : false,
                     search_data         : "",
                     // Assumiamo la condizione secondo cui, per ogni contatto, il messaggio "sent" si intende come inviato dal contatto a me e il contrario per "received"
@@ -267,7 +267,7 @@ createApp(
         random_reply()
         {
             let d_t_str = this.date_time_str();
-            this.contacts[this.active_contact].messages.push({'date':d_t_str, 'message':this.random_replies[this.int_random(this.random_replies.length)], 'status': "sent"});
+            this.contacts[this.active_contact].messages.push({'date':d_t_str, 'message':this.random_replies[this.int_random(this.random_replies.length)], 'status': "received"});
         },
 
         date_time_str()
@@ -292,7 +292,7 @@ createApp(
         {
             let d_t_str = this.date_time_str();
 
-            this.contacts[this.active_contact].messages.push({'date':d_t_str, 'message':this.new_message, 'status': "received"});
+            this.contacts[this.active_contact].messages.push({'date':d_t_str, 'message':this.new_message, 'status': "sent"});
             this.new_message = "";
 
             setTimeout(this.random_reply, this.new_message_delay);
@@ -365,6 +365,8 @@ createApp(
         {
             let fake_anchor = document.createElement("a");
             fake_anchor.setAttribute("href",`#contact_${index}`);
+            console.log("fake anchor: ",fake_anchor);
+            console.log("index: ",index);
             fake_anchor.click();
             fake_anchor.remove();
         },
@@ -391,11 +393,11 @@ createApp(
             });
         },
 
-        // Metodo che restituisce un valore booleano indicante la presenza o meno dei dati di ultimo accesso (ultimo messaggio inviato) relativamente al contatto indicizzato dal parametro. Il metodo salva gli eventuali dati (data / ora) aggiornando la variabile array "last_sent_data"
-        check_last_sent(index)
+        // Metodo che restituisce un valore booleano indicante la presenza o meno dei dati di ultimo accesso (ultimo messaggio inviato) relativamente al contatto indicizzato dal parametro. Il metodo salva gli eventuali dati (data / ora) aggiornando la variabile array "last_received_data"
+        check_last(index)
         {
-            last_sent_data = ["----","----"];
-            last_sent_msg = "----";
+            last_received_data = ["----","----"];
+            last_received_msg = "----";
             let flag = false;
             if (this.contacts[index].messages.length != 0)
             {
@@ -403,30 +405,30 @@ createApp(
                 do
                 {
                     i--;
-                    if (this.contacts[index].messages[i].status == "sent")
+                    if (this.contacts[index].messages[i].status == "received")
                     {
                         flag = true;
-                        last_sent_data = this.contacts[index].messages[i].date.split(" ");
-                        last_sent_msg = this.contacts[index].messages[i].message;
+                        last_received_data = this.contacts[index].messages[i].date.split(" ");
+                        last_received_msg = this.contacts[index].messages[i].message;
                     }
                 } while ((!flag) && (i > 0));
             }
             return flag;
         },
 
-        check_last_sent_plus_output(index, value)
+        check_last_plus_output(index, value)
         {
             let output_str = "";
             switch (value)
             {
                 case 0:
-                    (this.check_last_sent(index)) ? (output_str = `Ultimo accesso: ${last_sent_data[0].substring(0,5)} alle ${last_sent_data[1].substring(0,5)}`) : (output_str = "Ultimo accesso: ---- ");
+                    (this.check_last(index)) ? (output_str = `Ultimo accesso: ${last_received_data[0].substring(0,5)} alle ${last_received_data[1].substring(0,5)}`) : (output_str = "Ultimo accesso: ---- ");
                     break;
                 case 1:
-                    (this.check_last_sent(index)) ? (output_str = `${last_sent_msg}`) : (output_str = "----");
+                    (this.check_last(index)) ? (output_str = `${last_received_msg}`) : (output_str = "----");
                     break;
                 case 2:
-                    (this.check_last_sent(index)) ? (output_str = `${last_sent_data[0].substring(0,5)}`) : (output_str = "----");
+                    (this.check_last(index)) ? (output_str = `${last_received_data[0].substring(0,5)}`) : (output_str = "----");
                     break;
 
             }

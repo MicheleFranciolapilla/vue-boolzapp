@@ -9,6 +9,11 @@
     /* VARIABILI CROMATICHE */
 }
 
+#web_app
+{
+    background-image: linear-gradient(315deg, rgb(81, 76, 76) 33%, rgb(160, 129, 129) 66%, rgb(89, 162, 230));
+}
+
 #error_manager
 {
     position: absolute;
@@ -31,6 +36,7 @@ main
 {
     width: var(--main_width);
     height: var(--main_height);
+    background-color: white;
 }
 
 #friends_side, #chat_side
@@ -83,6 +89,9 @@ main
     display: flex;
     flex-direction: column;
     align-items: start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .icons_set

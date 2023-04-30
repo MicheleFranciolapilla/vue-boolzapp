@@ -23,7 +23,7 @@
         <!-- Titolo h1 (dinamico) in position fixed per non sottrarre spazio al contenitore web_app -->
         <h1 class="fixed-top text-center text-white fs-3">Vue Boolzapp <span class="fs-4 text-white-50">{{(check_if_large) ? ('(Large)') : ('(Small)')}}</span></h1>
         <!-- Ricordarsi di impostare il background a gradiente -->
-        <div id="web_app" class="vh-100 container-fluid d-flex justify-content-center align-items-center bg-success">
+        <div id="web_app" class="vh-100 container-fluid d-flex justify-content-center align-items-center">
             <div v-if="some_error" id="error_manager">
                 <div id="error_message" class="row py-3 px-2 px-lg-5 border border-5 border-danger rounded-3 text-danger bg-warning">
                     <p>{{error_array[some_error]}}</p>
@@ -72,10 +72,10 @@
                                 <img v-bind:src="item.avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${index}`>
                                 <div class="person_details align-self-start">
                                     <span style="font-size: xx-small;">{{item.name}}</span>
-                                    <span class="show_last_msg" style="font-size: xx-small;">{{check_last_sent_plus_output(index,1)}}</span>
+                                    <span class="show_last_msg" style="font-size: xx-small;">{{check_last_plus_output(index,1)}}</span>
                                 </div>
                             </div>
-                            <span style="font-size: xx-small;" class="align-self-start">{{check_last_sent_plus_output(index,2)}}</span>
+                            <span style="font-size: xx-small;" class="align-self-start">{{check_last_plus_output(index,2)}}</span>
                         </div>
                     </div>
                 </section>
@@ -89,7 +89,7 @@
                             <img v-bind:src="contacts[active_contact].avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${active_contact}`>
                             <div class="person_details">
                                 <span>{{contacts[active_contact].name}}</span>
-                                <span style="font-size: xx-small;">{{check_last_sent_plus_output(active_contact,0)}}</span>
+                                <span style="font-size: xx-small;">{{check_last_plus_output(active_contact,0)}}</span>
                             </div>
                         </div>
                         <div class="icons_set">
@@ -100,11 +100,11 @@
                     </div>
                     <div id="chat_messages_area" class="position-relative p-3">
                         <div v-if="contacts[active_contact].messages.length != 0" id="chat_head_text" class="sticky-top w-100">
-                            <div id="sent_by_me">
-                                <span>Messaggi inviati da me... ({{check_msg_amount('received')}})</span>
-                            </div>
                             <div id="sent_by_active">
-                                <span>Messaggi inviati da {{contacts[active_contact].name}}... ({{check_msg_amount('sent')}})</span>
+                                <span>Messaggi inviati da {{contacts[active_contact].name}}... ({{check_msg_amount('received')}})</span>
+                            </div>
+                            <div id="sent_by_me">
+                                <span>Messaggi inviati da me... ({{check_msg_amount('sent')}})</span>
                             </div>
                         </div>
                         <p v-else class="p-2 border border-3 border-warning rounded-3 text-black-50 bg-info">Non ci sono messaggi da visualizzare. La tua chat con {{contacts[active_contact].name}} è vuota</p>
