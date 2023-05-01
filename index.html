@@ -71,11 +71,12 @@
                             <div class="person">
                                 <img v-bind:src="item.avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${index}`>
                                 <div class="person_details align-self-start">
-                                    <span style="font-size: xx-small;">{{item.name}}</span>
-                                    <span class="show_last_msg" style="font-size: xx-small;">{{check_last_plus_output(index,1)}}</span>
+                                    <span style="font-size: small;">{{item.name}}</span>
+                                    <span class="show_last_msg" style="font-size: x-small;"><i class="fa-solid fa-file-arrow-down"></i> {{check_last_plus_output(index,1)}}</span>
+                                    <span class="show_last_msg" style="font-size: x-small;"><i class="fa-solid fa-file-arrow-up"></i> {{check_last_plus_output(index,3)}}</span>
                                 </div>
                             </div>
-                            <span style="font-size: xx-small;" class="align-self-start">{{check_last_plus_output(index,2)}}</span>
+                            <span style="font-size: xx-small;" class="info_last align-self-start">{{check_last_plus_output(index,2)}}</span>
                         </div>
                     </div>
                 </section>

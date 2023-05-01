@@ -72,8 +72,9 @@ main
 .person
 {
     height: 80%;
+    width: 80%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     gap: 5px;
 }
@@ -89,9 +90,17 @@ main
     display: flex;
     flex-direction: column;
     align-items: start;
+    max-width: 80%;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    /* Ellipsis non funziona poichè necessita di width espressa in pixels */
+    /* text-overflow: ellipsis; */
+}
+
+.info_last
+{
+    width: 20%;
+    text-align: end;
 }
 
 .icons_set

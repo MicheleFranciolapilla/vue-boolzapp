@@ -30,11 +30,10 @@ createApp(
                     device_threshold    : 576,
                     chat_is_active      : false,
                     active_contact      : null, 
-                    last_received_data      : null, 
-                    last_received_msg       : null,
+                    last_rec_sent_data      : null, 
+                    last_rec_sent_msg       : null,
                     allow_notifications : false,
                     search_data         : "",
-                    // Assumiamo la condizione secondo cui, per ogni contatto, il messaggio "sent" si intende come inviato dal contatto a me e il contrario per "received"
                     contacts            : [
                                             {
                                                 name        : 'Michele',
@@ -393,23 +392,25 @@ createApp(
             });
         },
 
-        // Metodo che restituisce un valore booleano indicante la presenza o meno dei dati di ultimo accesso (ultimo messaggio inviato) relativamente al contatto indicizzato dal parametro. Il metodo salva gli eventuali dati (data / ora) aggiornando la variabile array "last_received_data"
-        check_last(index)
+        // Metodo che restituisce un valore booleano indicante la presenza o meno dei dati di ultimo accesso (ultimo messaggio inviato) relativamente al contatto indicizzato dal parametro. Il metodo salva gli eventuali dati (data / ora) aggiornando la variabile array "last_rec_sent_data"
+        check_last(index, direction)
         {
-            last_received_data = ["----","----"];
-            last_received_msg = "----";
+            last_rec_sent_data = ["----","----"];
+            last_rec_sent_msg = "----";
             let flag = false;
+            let msg_direction = "received";
+            if (direction) msg_direction = "sent";
             if (this.contacts[index].messages.length != 0)
             {
                 let i = this.contacts[index].messages.length;
                 do
                 {
                     i--;
-                    if (this.contacts[index].messages[i].status == "received")
+                    if (this.contacts[index].messages[i].status == msg_direction)
                     {
                         flag = true;
-                        last_received_data = this.contacts[index].messages[i].date.split(" ");
-                        last_received_msg = this.contacts[index].messages[i].message;
+                        last_rec_sent_data = this.contacts[index].messages[i].date.split(" ");
+                        last_rec_sent_msg = this.contacts[index].messages[i].message;
                     }
                 } while ((!flag) && (i > 0));
             }
@@ -422,15 +423,17 @@ createApp(
             switch (value)
             {
                 case 0:
-                    (this.check_last(index)) ? (output_str = `Ultimo accesso: ${last_received_data[0].substring(0,5)} alle ${last_received_data[1].substring(0,5)}`) : (output_str = "Ultimo accesso: ---- ");
+                    (this.check_last(index,false)) ? (output_str = `Ultimo accesso: ${last_rec_sent_data[0].substring(0,5)} alle ${last_rec_sent_data[1].substring(0,5)}`) : (output_str = "Ultimo accesso: ---- ");
                     break;
                 case 1:
-                    (this.check_last(index)) ? (output_str = `${last_received_msg}`) : (output_str = "----");
+                    (this.check_last(index,false)) ? (output_str = `${last_rec_sent_msg}`) : (output_str = "----");
                     break;
                 case 2:
-                    (this.check_last(index)) ? (output_str = `${last_received_data[0].substring(0,5)}`) : (output_str = "----");
+                    (this.check_last(index,false)) ? (output_str = `${last_rec_sent_data[0].substring(0,5)}`) : (output_str = "----");
                     break;
-
+                case 3:
+                    (this.check_last(index,true)) ? (output_str = `${last_rec_sent_msg}`) : (output_str = "----");
+                    break;
             }
             return output_str;
         },
