@@ -72,7 +72,7 @@ main
 .person
 {
     height: 80%;
-    width: 80%;
+    width: calc(80%);
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -90,11 +90,19 @@ main
     display: flex;
     flex-direction: column;
     align-items: start;
-    max-width: 80%;
+    max-width: calc(80%);
     white-space: nowrap;
     overflow: hidden;
     /* Ellipsis non funziona poichè necessita di width espressa in pixels */
     /* text-overflow: ellipsis; */
+}
+
+.person_details span
+{
+    width: calc(100%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .info_last

@@ -22,7 +22,8 @@ createApp(
                                             "Ok",
                                             "Non capisco cosa vuoi dire!",
                                             "Rispondo a casaccio",
-                                            "Ci vediamo stasera?"
+                                            "Ci vediamo stasera?",
+                                            "Rispondo con qualcosa di insensato e lungo, tanto, con overflow ellipsis non ho problemi"
                                           ], 
                     new_message         : "", 
                     new_message_delay   : 1500, 
