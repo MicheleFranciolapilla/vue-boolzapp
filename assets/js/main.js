@@ -305,12 +305,16 @@ createApp(
 
         click_on_contact(index)
         {
+            // this.set_all_visible();
+            console.log("click su....",index);
+            console.log("chat is active? ",this.chat_is_active);
             if (this.chat_is_active) 
             {
                 this.leave_chat_area();
                 this.new_active(index);
             }
             else 
+            {
                 if (index == this.active_contact)
                 {
                     // L'invocazione a new_active in questo specifico caso, apparentemente inutile, torna utile laddove il click sul contatto già attivo avvenga mentre è operativa la barra di ricerca (eventuali contatti non visibili)
@@ -318,13 +322,15 @@ createApp(
                     this.chat_is_active = true;
                 }
                 else this.new_active(index);
+            }
+
         },
 
-        key_on_contact(index, key_event)
-        {
-            console.log(index);
-            console.log(key.event.key);
-        },
+        // key_on_contact(index, key_event)
+        // {
+        //     console.log(index);
+        //     console.log(key.event.key);
+        // },
 
         check_msg_amount(what)
         {
@@ -459,14 +465,16 @@ createApp(
         focus_on_active(index)
         {
             let item_str = `#contact_${index}`;
+            console.log("item_str: ",item_str);
             let item = document.querySelector(item_str);
             let item_area = item.getBoundingClientRect();
+            console.log("area del contatto: ",item_area);
             let contact_area_rect = document.querySelector("#contact_list").getBoundingClientRect();
 
             if (!this.is_rect_inside(item_area, contact_area_rect))
             {
                 let fake_anchor = document.createElement("a");
-                fake_anchor.setAttribute("href",`#contact_${index}`);
+                fake_anchor.setAttribute("href",item_str);
                 console.log(fake_anchor);
                 console.log(index);
                 fake_anchor.click();
