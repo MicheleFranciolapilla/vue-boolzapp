@@ -54,20 +54,20 @@
                         </div>
                         <div id="notifications_text">
                             <span class="text-black-50">Ricevi notifiche messaggi</span>
-                            <a href="#" v-on:click="allow_notifications = !allow_notifications">{{(allow_notifications) ? ("Disattiva notifiche desktop") : ("Attiva notifiche desktop")}}</a>
+                            <a href="#" tabindex="-1" v-on:click="allow_notifications = !allow_notifications">{{(allow_notifications) ? ("Disattiva notifiche desktop") : ("Attiva notifiche desktop")}}</a>
                         </div>
                     </div>
                     <div id="search_area" class="px-3 py-1">
                         <form id="search_form" class="w-100 border border-3 rounded-1 d-flex">
-                            <button class="btn btn-outline-success" type="submit"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
-                            <input id="data_input" class="form-control" type="text" v-model="search_data" placeholder="Cerca o inizia una nuova chat" aria-label="Search" autocomplete="off" v-on:keyup="searching()">
+                            <button tabindex="-1" class="btn btn-outline-success" type="submit"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+                            <input id="data_input" tabindex="-1" class="form-control" type="text" v-model="search_data" placeholder="Cerca o inizia una nuova chat" aria-label="Search" autocomplete="off" v-on:keyup="searching()">
                         </form>
                     </div>
                     <div id="contact_list">
                         <div v-for="(item, index) in contacts" :key="index" class="contact ps-3 pe-2" 
                         v-bind:id=`contact_${index}`
                         v-bind:class="(index==active_contact) ? ('active') : ('')"
-                        v-bind:style="(!item.visible) ? ('display: none;') : ('')" v-on:click.stop="click_on_contact(index)" v-on:keyup.stop="key_on_contact(index)">
+                        v-bind:style="(!item.visible) ? ('display: none;') : ('')" v-on:click.stop="click_on_contact(index)">
                             <div class="person">
                                 <img v-bind:src="item.avatar" class="rounded-circle" v-bind:alt=`Avatar_nr_${index}`>
                                 <div class="person_details align-self-start">
@@ -132,7 +132,7 @@
                         <span v-if="chat_is_active"><i id="back" class="fa-solid fa-hand-point-left fa-beat-fade fs-4 text-primary" v-on:click.stop="leave_chat_area()"></i></span>
                         <span><i class="fa-regular fa-face-smile-beam fs-4"></i></span>
                         <form id="new_message_form">
-                            <input class="form-control" type="text" v-model="new_message" placeholder="Scrivi quì un messaggio">
+                            <input tabindex="-1" class="form-control" type="text" v-model="new_message" placeholder="Scrivi quì un messaggio">
                         </form>
                         <span><i class="fa-solid fa-microphone fs-4"></i></span>
                     </div>
