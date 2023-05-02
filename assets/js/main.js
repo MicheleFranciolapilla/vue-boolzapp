@@ -11,6 +11,8 @@ createApp(
     data() 
     {
         return  {
+                    contact_area_rect   : null,
+                    chat_area_rect      : null,  
                     just_started        : true,
                     some_error          : 0, 
                     error_array         : [
@@ -234,10 +236,20 @@ createApp(
                 this.add_new_message();
             }
         });
+        this.get_areas_rect();
 
     },
     methods: 
     {
+
+        get_areas_rect()
+        {
+            this.contact_area_rect = document.querySelector("#contact_list").getBoundingClientRect();
+            this.chat_area_rect = document.querySelector("#chat_messages_area").getBoundingClientRect();
+            console.log(this.contact_area_rect);
+            console.log(this.chat_area_rect);
+
+        },
 
         set_all_visible()
         {
@@ -425,12 +437,22 @@ createApp(
 
         focus_on_active(index)
         {
-            let fake_anchor = document.createElement("a");
-            fake_anchor.setAttribute("href",`#contact_${index}`);
-            console.log(fake_anchor);
-            console.log(index);
-            fake_anchor.click();
-            fake_anchor.remove();
+            let item_str = `#contact_${index}`;
+            console.log("item_str: ",item_str);
+            let item = document.querySelector(item_str);
+            let item_area = item.getBoundingClientRect();
+            if (!((item_area.top >= this.contact_area_rect.top) && 
+                (item_area.left >= this.contact_area_rect.left) &&
+                (item_area.bottom <= this.contact_area_rect.bottom) &&
+                (item_area.right <= this.contact_area_rect.right)))
+            {
+                let fake_anchor = document.createElement("a");
+                fake_anchor.setAttribute("href",`#contact_${index}`);
+                console.log(fake_anchor);
+                console.log(index);
+                fake_anchor.click();
+                fake_anchor.remove();
+            } 
         },
 
         new_active(index)
@@ -512,10 +534,11 @@ createApp(
 
         check_device_change()
         {
-           let device_before_resize = this.check_if_large; 
-           if (this.check_device() != device_before_resize)
-           {
-           }
+            let device_before_resize = this.check_if_large; 
+            if (this.check_device() != device_before_resize)
+            {
+                this.get_areas_rect();
+            }
         }
     }
 }).mount('#vue_app')
