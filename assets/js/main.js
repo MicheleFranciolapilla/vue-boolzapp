@@ -471,7 +471,7 @@ createApp(
             console.log("area del contatto: ",item_area);
             let contact_area_rect = document.querySelector("#contact_list").getBoundingClientRect();
 
-            if (!this.is_rect_inside(item_area, contact_area_rect))
+            if ((!this.is_rect_inside(item_area, contact_area_rect)) || (this.search_data != ""))
             {
                 let fake_anchor = document.createElement("a");
                 fake_anchor.setAttribute("href",item_str);
@@ -484,10 +484,10 @@ createApp(
 
         new_active(index)
         {
-            this.search_data = "";
             this.set_all_visible();
             this.active_contact = index;
             this.focus_on_active(index);
+            this.search_data = "";
         },
 
         selection_by_search_bar()
