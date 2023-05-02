@@ -216,9 +216,12 @@ createApp(
         // Funzionamento ok in inspector, non ok in window resize
         window.addEventListener("resize", () => {this.check_device_change()});
 
+        window.addEventListener("keydown", (key_event) => {this.check_key_action(key_event)});
+
         search_form.addEventListener("submit", (key_event) => 
         {
             key_event.preventDefault();
+            key_event.stopPropagation();
             this.selection_by_search_bar();
         });
 
@@ -244,10 +247,62 @@ createApp(
             }
         },
 
+        check_key_action(key_event)
+        {
+            // Si analizza il tasto premuto, in funzione di scorrimento o selezione di un contatto a patto che non siano attive la finestra di errori, la barra di ricerca o l'input di un nuovo messaggio
+            if ((this.some_error == 0) && (this.search_data == "") && (this.new_message == ""))
+            {
+                // L'inconveniente nell'uso del click fake su tag anchor provvisorio sta nel fatto che, nello scrolling dei contatti, il nuovo contatto attivo, se tra i primi della lista, si posizionerà sempre in alto
+                if (!this.chat_is_active)
+                {
+                    switch (key_event.key)
+                    {
+                        case "ArrowUp":
+                            if (this.active_contact == 0)
+                            {
+                                this.active_contact = this.contacts.length - 1;
+                            }
+                            else
+                            {
+                                this.active_contact--;
+                            }
+                            this.new_active(this.active_contact);
+                            break;
+                        case "ArrowDown":
+                            if (this.active_contact == this.contacts.length - 1)
+                            {
+                                this.active_contact = 0;
+                            }
+                            else
+                            {
+                                this.active_contact++;
+                            }
+                            this.new_active(this.active_contact);
+                            break;
+                        case "Enter":
+                            this.chat_is_active = true;
+                            break;
+                    }
+                }
+                else
+                {}
+            }
+        },
+
         click_on_contact(index)
         {
-            if (this.chat_is_active) this.leave_chat_area()
-            else if (index == this.active_contact) this.chat_is_active = true;
+            if (this.chat_is_active) 
+            {
+                this.leave_chat_area();
+                this.new_active(index);
+            }
+            else 
+                if (index == this.active_contact)
+                {
+                    // L'invocazione a new_active in questo specifico caso, apparentemente inutile, torna utile laddove il click sul contatto già attivo avvenga mentre è operativa la barra di ricerca (eventuali contatti non visibili)
+                    this.new_active(this.active_contact);
+                    this.chat_is_active = true;
+                }
                 else this.new_active(index);
         },
 
@@ -460,7 +515,6 @@ createApp(
            let device_before_resize = this.check_if_large; 
            if (this.check_device() != device_before_resize)
            {
-                // this.modify_css_root();
            }
         }
     }

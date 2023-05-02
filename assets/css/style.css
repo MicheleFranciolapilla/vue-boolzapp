@@ -191,10 +191,10 @@ main
     cursor: pointer;
 }
 
-.contact:hover
+/* .contact:hover
 {
     background-color: lightgray;
-}
+} */
 
 .contact.active
 {
