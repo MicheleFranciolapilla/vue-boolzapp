@@ -72,7 +72,7 @@ main
 .person
 {
     height: 80%;
-    width: calc(80%);
+    width: calc(75%);
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -107,7 +107,7 @@ main
 
 #last_msg_date
 {
-    width: 20%;
+    width: 25%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

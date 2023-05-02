@@ -236,11 +236,25 @@ createApp(
     methods: 
     {
 
+        set_all_visible()
+        {
+            for (let i = 0; i < this.contacts.length; i++)
+            {
+                this.contacts[i].visible = true;
+            }
+        },
+
         click_on_contact(index)
         {
             if (this.chat_is_active) this.leave_chat_area()
             else if (index == this.active_contact) this.chat_is_active = true;
                 else this.new_active(index);
+        },
+
+        key_on_contact(index, key_event)
+        {
+            console.log(index);
+            console.log(key.event.key);
         },
 
         check_msg_amount(what)
@@ -344,6 +358,7 @@ createApp(
         reset_error()
         {
             this.some_error = 0;
+            this.focus_on_active(this.active_contact);
         },
 
         error(what)
@@ -357,8 +372,8 @@ createApp(
         {
             let fake_anchor = document.createElement("a");
             fake_anchor.setAttribute("href",`#contact_${index}`);
-            console.log("fake anchor: ",fake_anchor);
-            console.log("index: ",index);
+            console.log(fake_anchor);
+            console.log(index);
             fake_anchor.click();
             fake_anchor.remove();
         },
@@ -366,7 +381,7 @@ createApp(
         new_active(index)
         {
             this.search_data = "";
-            this.searching();
+            this.set_all_visible();
             this.active_contact = index;
             this.focus_on_active(index);
         },
@@ -432,14 +447,6 @@ createApp(
                     break;
             }
             return output_str;
-        },
-
-        modify_css_root()
-        {
-            let css_root = document.querySelector(":root");
-            // Per settare correttamente i coefficienti di larghezza dei due blocchi (friends e chat) si indicizzano gli elementi appositi negli specifici array, utilizzando il valore numerico della variabile booleana check_if_change..... (false = 0 ==> coefficiente nell'array all'indice 0) e (true = 1 ==> coefficiente all'indice 1)
-            css_root.style.setProperty("--width_friends_side", widths_friends[this.check_if_large]); 
-            css_root.style.setProperty("--width_chat_side", widths_chat[this.check_if_large]); 
         },
 
         check_device()
