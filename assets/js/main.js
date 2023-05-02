@@ -216,21 +216,6 @@ createApp(
         // Funzionamento ok in inspector, non ok in window resize
         window.addEventListener("resize", () => {this.check_device_change()});
 
-        // let DOM_contacts = document.querySelectorAll(".contact");
-        // DOM_contacts.addEventListener("keydown", (key_event) =>
-        // {
-            // key_event.preventDefault();
-            // switch (key_event.key)
-            // {
-            //     case "ArrowUp":
-            //         (this.active_contact==0) ? (this.active_contact=this.contacts.length-1) : (this.active_contact--);
-            //         break;
-            //     case "ArrowDown":
-            //         (this.active_contact==this.contacts.length-1) ? (this.active_contact=0) : (this.active_contact++);
-            //         break;
-            // }
-        // });
-
         search_form.addEventListener("submit", (key_event) => 
         {
             key_event.preventDefault();
@@ -250,6 +235,13 @@ createApp(
     },
     methods: 
     {
+
+        click_on_contact(index)
+        {
+            if (this.chat_is_active) this.leave_chat_area()
+            else if (index == this.active_contact) this.chat_is_active = true;
+                else this.new_active(index);
+        },
 
         check_msg_amount(what)
         {
@@ -434,6 +426,9 @@ createApp(
                     break;
                 case 3:
                     (this.check_last(index,true)) ? (output_str = `${last_rec_sent_msg}`) : (output_str = "----");
+                    break;
+                case 4:
+                    (this.check_last(index,true)) ? (output_str = `${last_rec_sent_data[0].substring(0,5)}`) : (output_str = "----");
                     break;
             }
             return output_str;
