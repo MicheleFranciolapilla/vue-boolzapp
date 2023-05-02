@@ -269,7 +269,7 @@ createApp(
                     switch (key_event.key)
                     {
                         case "ArrowUp":
-                            // key_event.preventDefault();
+                            key_event.preventDefault();
                             if (this.active_contact == 0)
                             {
                                 this.active_contact = this.contacts.length - 1;
@@ -281,7 +281,7 @@ createApp(
                             this.new_active(this.active_contact);
                             break;
                         case "ArrowDown":
-                            // key_event.preventDefault();
+                            key_event.preventDefault();
                             if (this.active_contact == this.contacts.length - 1)
                             {
                                 this.active_contact = 0;
@@ -293,7 +293,7 @@ createApp(
                             this.new_active(this.active_contact);
                             break;
                         case "Enter":
-                            // key_event.preventDefault();
+                            key_event.preventDefault();
                             this.chat_is_active = true;
                             break;
                     }
