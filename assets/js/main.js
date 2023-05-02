@@ -210,7 +210,6 @@ createApp(
         {
             this.just_started = false;
             this.check_device();
-            // this.modify_css_root();
         }
     },
     mounted()
@@ -236,20 +235,21 @@ createApp(
                 this.add_new_message();
             }
         });
-        this.get_areas_rect();
+        
+        // this.get_areas_rect();
 
     },
     methods: 
     {
 
-        get_areas_rect()
-        {
-            this.contact_area_rect = document.querySelector("#contact_list").getBoundingClientRect();
-            this.chat_area_rect = document.querySelector("#chat_messages_area").getBoundingClientRect();
-            console.log(this.contact_area_rect);
-            console.log(this.chat_area_rect);
-
-        },
+        // get_areas_rect()
+        // {
+        //     if (this.chat_is_active)
+        //     let contact_area = document.querySelector("#contact_list");
+        //     let chat_area = document.querySelector("#chat_messages_area");
+        //     this.contact_area_rect = contact_area.getBoundingClientRect();
+        //     this.chat_area_rect = chat_area.getBoundingClientRect();
+        // },
 
         set_all_visible()
         {
@@ -264,12 +264,12 @@ createApp(
             // Si analizza il tasto premuto, in funzione di scorrimento o selezione di un contatto a patto che non siano attive la finestra di errori, la barra di ricerca o l'input di un nuovo messaggio
             if ((this.some_error == 0) && (this.search_data == "") && (this.new_message == ""))
             {
-                // L'inconveniente nell'uso del click fake su tag anchor provvisorio sta nel fatto che, nello scrolling dei contatti, il nuovo contatto attivo, se tra i primi della lista, si posizionerà sempre in alto
                 if (!this.chat_is_active)
                 {
                     switch (key_event.key)
                     {
                         case "ArrowUp":
+                            // key_event.preventDefault();
                             if (this.active_contact == 0)
                             {
                                 this.active_contact = this.contacts.length - 1;
@@ -281,6 +281,7 @@ createApp(
                             this.new_active(this.active_contact);
                             break;
                         case "ArrowDown":
+                            // key_event.preventDefault();
                             if (this.active_contact == this.contacts.length - 1)
                             {
                                 this.active_contact = 0;
@@ -292,6 +293,7 @@ createApp(
                             this.new_active(this.active_contact);
                             break;
                         case "Enter":
+                            // key_event.preventDefault();
                             this.chat_is_active = true;
                             break;
                     }
@@ -435,16 +437,33 @@ createApp(
             this.some_error = what; 
         },
 
+        is_rect_inside(rect1, rect2)
+        {
+            let answer = false;
+            console.log("--------------------------------");
+            console.log(rect1.top, " - ", rect2.top);
+            console.log(rect1.left, " - ", rect2.left);
+            console.log(rect1.bottom, " - ", rect2.bottom);
+            console.log(rect1.right, " - ", rect2.right);
+            console.log("--------------------------------");
+            if ((rect1.top >= rect2.top) &&
+                (rect1.left >= rect2.left) &&
+                (rect1.bottom <= rect2.bottom) &&
+                (rect1.right <= rect2.right))
+            {
+                answer = true;
+            }
+            return answer;
+        },
+
         focus_on_active(index)
         {
             let item_str = `#contact_${index}`;
-            console.log("item_str: ",item_str);
             let item = document.querySelector(item_str);
             let item_area = item.getBoundingClientRect();
-            if (!((item_area.top >= this.contact_area_rect.top) && 
-                (item_area.left >= this.contact_area_rect.left) &&
-                (item_area.bottom <= this.contact_area_rect.bottom) &&
-                (item_area.right <= this.contact_area_rect.right)))
+            let contact_area_rect = document.querySelector("#contact_list").getBoundingClientRect();
+
+            if (!this.is_rect_inside(item_area, contact_area_rect))
             {
                 let fake_anchor = document.createElement("a");
                 fake_anchor.setAttribute("href",`#contact_${index}`);
@@ -537,7 +556,7 @@ createApp(
             let device_before_resize = this.check_if_large; 
             if (this.check_device() != device_before_resize)
             {
-                this.get_areas_rect();
+                // this.get_areas_rect();
             }
         }
     }
