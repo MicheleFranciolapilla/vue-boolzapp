@@ -257,6 +257,11 @@ main
     color: blue;
 }
 
+.message.last
+{
+    border: 3px solid yellow;
+} 
+
 .hoverable:hover .trash
 {
     display: flex;

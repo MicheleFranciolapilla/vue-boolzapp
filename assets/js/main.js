@@ -242,14 +242,13 @@ createApp(
     methods: 
     {
 
-        // get_areas_rect()
-        // {
-        //     if (this.chat_is_active)
-        //     let contact_area = document.querySelector("#contact_list");
-        //     let chat_area = document.querySelector("#chat_messages_area");
-        //     this.contact_area_rect = contact_area.getBoundingClientRect();
-        //     this.chat_area_rect = chat_area.getBoundingClientRect();
-        // },
+        set_message_classes(index)
+        {
+            let return_str = "";
+            if (this.chat_is_active) return_str = "hoverable";
+            if ((index + 1) == (this.check_msg_amount("received") + this.check_msg_amount("sent"))) return_str += " last";
+            return return_str;
+        },
 
         set_all_visible()
         {
@@ -325,12 +324,6 @@ createApp(
             }
 
         },
-
-        // key_on_contact(index, key_event)
-        // {
-        //     console.log(index);
-        //     console.log(key.event.key);
-        // },
 
         check_msg_amount(what)
         {

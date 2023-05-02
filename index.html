@@ -115,7 +115,7 @@
                         <div v-for="(item, index) in contacts[active_contact].messages"
                             :key="index"
                             class="message position-relative"
-                            v-bind:class="(chat_is_active) ? ('hoverable') : ('')"
+                            v-bind:class="set_message_classes(index)"
                             v-bind:style="(item.status == 'sent') ? ('align-self:flex-end; background-color:lightgreen;') : ('align-self:flex-start; background-color:white;')">
                             <div class="trash" v-on:click="open_dropdown(index)">
                                 <i class="fa-solid fa-trash-can"></i>
