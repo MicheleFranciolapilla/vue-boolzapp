@@ -472,87 +472,6 @@ createApp(
             return return_str;
         },
 
-
-
-
-
-
-
-        check_msg_amount(what)
-        {
-            let nr = 0;
-            for (let i = 0; i < this.contacts[this.active_contact].messages.length; i++)
-                if (this.contacts[this.active_contact].messages[i].status == what)
-                    nr++;
-            return nr;
-        },
-
-        int_random(max) {return Math.floor(Math.random() * max)},
-
-        is_odd(number) {return ((number % 2) != 0)},
-
-        random_reply()
-        {
-            let d_t_str = this.date_time_str();
-            this.contacts[this.active_contact].messages.push({'date':d_t_str, 'message':this.random_replies[this.int_random(this.random_replies.length)], 'status': "received"});
-        },
-
-
-
-        add_new_message()
-        {
-            let d_t_str = this.date_time_str();
-
-            this.contacts[this.active_contact].messages.push({'date':d_t_str, 'message':this.new_message, 'status': "sent"});
-            this.new_message = "";
-
-            setTimeout(this.random_reply, this.new_message_delay);
-        },
-
-
-
-        leave_chat_area()
-        {
-            this.close_dropdown(-1);
-            this.chat_is_active = false;
-        },
-
-        open_dropdown(index)
-        {
-            let all_dropdown = document.querySelectorAll(".dropdown");
-            all_dropdown[index].classList.remove("d-none");
-        },
-
-        close_dropdown(index)
-        {
-            let all_dropdown = document.querySelectorAll(".dropdown");
-            if (index < 0)
-            {
-                for (let i = 0; i < all_dropdown.length; i++)
-                    all_dropdown[i].classList.add("d-none");
-            }
-            else
-                all_dropdown[index].classList.add("d-none");
-        },
-
-        delete_message(index)
-        {
-            this.close_dropdown(index);
-            this.contacts[this.active_contact].messages.splice(index,1);
-        },
-
-
-
-
-
-
-
-
-
-
-
-
-
         // Metodo che restituisce un valore booleano indicante la presenza o meno dei dati di ultimo accesso (ultimo messaggio inviato) relativamente al contatto indicizzato dal parametro. Il metodo salva gli eventuali dati (data / ora) aggiornando la variabile array "last_rec_sent_data"
         check_last(index, direction)
         {
@@ -578,30 +497,100 @@ createApp(
             return flag;
         },
 
+        // Metodo con restituzione di stringa. Il valore restituito, a seconda dei parametri, va dall'ultimo messaggio inviato/ricevuto, alla data, eventualmente con orario, dello stesso.
         check_last_plus_output(index, value)
         {
             let output_str = "";
             switch (value)
             {
                 case 0:
+                    // Creazione della stringa: "ultimo accesso - data ed ora"
                     (this.check_last(index,false)) ? (output_str = `Ultimo accesso: ${last_rec_sent_data[0].substring(0,5)} alle ${last_rec_sent_data[1].substring(0,5)}`) : (output_str = "Ultimo accesso: ---- ");
                     break;
                 case 1:
+                    // Creazione della stringa con l'ultimo messaggio inviato dal contatto, all'utente
                     (this.check_last(index,false)) ? (output_str = `${last_rec_sent_msg}`) : (output_str = "----");
                     break;
                 case 2:
+                    // Creazione della stringa con la data dell'ultimo messaggio inviato dal contatto, all'utente
                     (this.check_last(index,false)) ? (output_str = `${last_rec_sent_data[0].substring(0,5)}`) : (output_str = "----");
                     break;
                 case 3:
+                    // Creazione della stringa con l'ultimo messaggio inviato dall'utente al contatto
                     (this.check_last(index,true)) ? (output_str = `${last_rec_sent_msg}`) : (output_str = "----");
                     break;
                 case 4:
+                    // Creazione della stringa con la data dell'ultimo messaggio inviato dall'utente al contatto
                     (this.check_last(index,true)) ? (output_str = `${last_rec_sent_data[0].substring(0,5)}`) : (output_str = "----");
                     break;
             }
             return output_str;
         },
 
+        // Il metodo perfeziona il passaggio di attività dall'area chat all'area contatti, con chiusura di tutti gli eventuali dropdown
+        leave_chat_area()
+        {
+            this.close_dropdown(-1);
+            this.chat_is_active = false;
+        },
 
+        // Il metodo restituisce il numero (dinamico) dei messggi inviati/ricevuti (a seconda del parametro) del contatto attivo
+        check_msg_amount(what)
+        {
+            let nr = 0;
+            for (let i = 0; i < this.contacts[this.active_contact].messages.length; i++)
+                if (this.contacts[this.active_contact].messages[i].status == what)
+                    nr++;
+            return nr;
+        },
+
+        // Generatore di numeri randomici
+        int_random(max) {return Math.floor(Math.random() * max)},
+
+        // Metodo booleano di riconoscimento di numeri dispari
+        is_odd(number) {return ((number % 2) != 0)},
+
+        // Metodo invocato a seguito di digitazione di un nuovo messaggio. Genera un messaggio di risposta casuale selezionato dall'apposito array
+        random_reply()
+        {
+            let d_t_str = this.date_time_str();
+            this.contacts[this.active_contact].messages.push({'date':d_t_str, 'message':this.random_replies[this.int_random(this.random_replies.length)], 'status': "received"});
+        },
+
+        // Metodo che perfeziona l'aggiunta di un nuovo messaggio (inviato dall'utente al contatto) ed invoca, con un ritardo prestabilito, il generatore del messaggio di risposta
+        add_new_message()
+        {
+            let d_t_str = this.date_time_str();
+            this.contacts[this.active_contact].messages.push({'date':d_t_str, 'message':this.new_message, 'status': "sent"});
+            this.new_message = "";
+            setTimeout(this.random_reply, this.new_message_delay);
+        },
+
+        // Metodo invocato al click sull'apposita icona del messaggio.....abilita e rende visibile la finestra di dropdown con l'opzione di cancellazione del messaggio
+        open_dropdown(index)
+        {
+            let all_dropdown = document.querySelectorAll(".dropdown");
+            all_dropdown[index].classList.remove("d-none");
+        },
+
+        // Il metodo chiude la finestra di dropdown indicizzata dal parametro; nel caso di parametro negativo, chiude tutti i dropdown dei messaggi del contatto attivo (il parametro negativo viene passato all'atto del cambio di attività dalla sezione chat alla sezione contatti)
+        close_dropdown(index)
+        {
+            let all_dropdown = document.querySelectorAll(".dropdown");
+            if (index < 0)
+            {
+                for (let i = 0; i < all_dropdown.length; i++)
+                    all_dropdown[i].classList.add("d-none");
+            }
+            else
+                all_dropdown[index].classList.add("d-none");
+        },
+
+        // Metodo che cancella il messaggio indicizzato
+        delete_message(index)
+        {
+            this.close_dropdown(index);
+            this.contacts[this.active_contact].messages.splice(index,1);
+        }
     }
 }).mount('#vue_app')
